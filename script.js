@@ -1,4 +1,7 @@
+//PAREI EM 1:06:31
 const form = document.querySelector("#myForm");
+form.addEventListener('submit', getPlayersNames);
+
 const winningCondition = () => {
     let posicoesVitoria = [[0, 1, 2],
     [3, 4, 5],
@@ -21,7 +24,6 @@ function getPlayersNames(e) {
     // console.log(data);
     initilizeGame(data);
 }
-form.addEventListener('submit', getPlayersNames);
 
 const initilizeVariables = (data) => {
     data.choice = +data.choice;
@@ -33,12 +35,23 @@ const initilizeVariables = (data) => {
     data.gameOver = false;
 }
 
-const gameBoardEventListeners = (data) => {
+function gameBoardEventListeners (data){
     document.querySelectorAll(".box").forEach(box => {
         box.addEventListener("click", (e) => {
             playMove(e.target, data);
         });
     });
+    const resetGameBtn = document.querySelector("#resetBtn");
+    resetGameBtn.addEventListener("click", () =>{
+        initilizeVariables(data);
+        resetDom();
+        adjustDom("displayTurn", `${data.player1Name}'s turn`);
+    });
+    const newGameBtn = document.querySelector("#restartBtn");
+    newGameBtn.addEventListener("click", () => {
+        window.location.reload(false);  
+    });
+
 };
 
 const initilizeGame = (data) => {
@@ -83,7 +96,7 @@ const checkWinner = (data) => {
     let result = false;
     const getWC = winningCondition();
     let winningConditions = getWC.getWinConditions();
-    console.log(data.board);
+    // console.log(data.board);
     winningConditions.forEach(condition => {
 
         if (data.board[condition[0]] === data.board[condition[1]] && data.board[condition[1]] === data.board[condition[2]]) {
@@ -107,4 +120,11 @@ function changePlayer(data){
 
 function currentPlayerFunc(data){ //DEVE RECEBER O OBJETO DATA
     return (data.currentPlayer === "X" ? data.player1Name : data.player2Name);
+}
+
+function resetDom(){
+    document.querySelectorAll(".box").forEach(box => {
+        box.textContent = "";
+        box.dataset.player = "";
+    });
 }
