@@ -42,6 +42,7 @@ const gameBoardEventListeners = (data) => {
 };
 
 const initilizeGame = (data) => {
+    adjustDom("displayTurn", `${data.player1Name}'s turn`);
     initilizeVariables(data);
     gameBoardEventListeners(data);
 }
@@ -67,7 +68,7 @@ const playMove = (box, data) => {
 
 const endConditions = (data) => {
     if (checkWinner(data)) {
-        let winnerName = data.currentPlayer === "X" ? data.player1Name : data.player2Name;
+        let winnerName = currentPlayerFunc(data);
         adjustDom("displayTurn", winnerName + " has won the game");
         return true;
     } else if (data.round === 9) {
@@ -86,7 +87,6 @@ const checkWinner = (data) => {
     winningConditions.forEach(condition => {
 
         if (data.board[condition[0]] === data.board[condition[1]] && data.board[condition[1]] === data.board[condition[2]]) {
-            console.log("player has won!");
             data.gameOver = true;
             result = true;
         }
@@ -102,4 +102,9 @@ function adjustDom(className, textContent){
 
 function changePlayer(data){
     data.currentPlayer = (data.currentPlayer === "X") ? "O" : "X" //vse o player atual for o 1(x) muda para o player 2(o)
+    adjustDom("displayTurn", `${currentPlayerFunc(data)}'s turn`);
+}
+
+function currentPlayerFunc(data){ //DEVE RECEBER O OBJETO DATA
+    return (data.currentPlayer === "X" ? data.player1Name : data.player2Name);
 }
