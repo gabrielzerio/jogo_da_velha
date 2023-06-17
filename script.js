@@ -1,4 +1,16 @@
 const form = document.querySelector("#myForm");
+const winningCondition = () => {
+    let posicoesVitoria = [[0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]];
+    const getWinConditions = () => posicoesVitoria;
+    return { getWinConditions };
+}
 
 function getPlayersNames(e) {
     //previnir o envio do formulario
@@ -17,7 +29,7 @@ const initilizeVariables = (data) => {
     data.player1 = 'X';
     data.player2 = 'O';
     data.round = 0;
-    data.currentPlayer = 'O';
+    data.currentPlayer = 'X';
     data.gameOver = false;
 }
 
@@ -39,12 +51,55 @@ const playMove = (box, data) => {
         return;
     }
     if (data.board[box.id] === "X" || data.board[box.id] === "O") { //se o array não tiver um X ou O no vetor indicado pelo box.id
-       return;
+        return;
     }
     data.board[box.id] = data.currentPlayer;
     box.textContent = data.currentPlayer;
     box.dataset.player = data.currentPlayer === "X" ? "player1" : "player2";
     data.round++;
     // console.log(box,data);
-    
+    if (endConditions(data)) {
+        return true;
+    }
+    //muda o player atual
+    changePlayer(data);
+}
+
+const endConditions = (data) => {
+    if (checkWinner(data)) {
+        let winnerName = data.currentPlayer === "X" ? data.player1Name : data.player2Name;
+        adjustDom("displayTurn", winnerName + " has won the game");
+        return true;
+    } else if (data.round === 9) {
+        adjustDom("displayTurn", "It's a Tie!");
+        data.gameOver = true;
+        return true;
+    }
+    return false;
+};
+
+const checkWinner = (data) => {
+    let result = false;
+    const getWC = winningCondition();
+    let winningConditions = getWC.getWinConditions();
+    console.log(data.board);
+    winningConditions.forEach(condition => {
+
+        if (data.board[condition[0]] === data.board[condition[1]] && data.board[condition[1]] === data.board[condition[2]]) {
+            console.log("player has won!");
+            data.gameOver = true;
+            result = true;
+        }
+
+    });
+    return result;
+}
+
+function adjustDom(className, textContent){
+    const elem = document.querySelector(`.${className}`);
+    elem.textContent = textContent;
+}
+
+function changePlayer(data){
+    data.currentPlayer = (data.currentPlayer === "X") ? "O" : "X" //vse o player atual for o 1(x) muda para o player 2(o)
 }
