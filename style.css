@@ -65,6 +65,9 @@ body {
     border: 1px solid rgba(0, 200, 255, 0.9);
     color: white;
     transition: all 0.2s ease-in-out;
+    box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #2948ff,
+        0 0 0.8rem #2948ff, 0 0 2.8rem #2948ff, inset 0 0 1.3rem #2948ff;
+    color: #fff;
     cursor: pointer;
 }
 
