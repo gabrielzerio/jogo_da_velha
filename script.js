@@ -26,12 +26,13 @@ function getPlayersNames(e) {
     const form = document.querySelector("#myForm");
     const formData = new FormData(form); //criei o objeto do tipo FormData
     const data = Object.fromEntries(formData); //
+    capitalizeUsersName(data);
     // console.log(data);
     initilizeGame(data);
 }
 
 const initilizeGame = (data) => {
-    adjustDom("displayTurn", `${data.player1Name}'s turn`);
+    adjustDom("displayTurn", `vez do(a) ${data.player1Name}`);
     initilizeVariables(data);
     gameBoardEventListeners(data);
 }
@@ -56,7 +57,7 @@ function gameBoardEventListeners(data) {
     resetGameBtn.addEventListener("click", () => {
         initilizeVariables(data);
         resetDom();
-        adjustDom("displayTurn", `${data.player1Name}'s turn`);
+        adjustDom("displayTurn", `vez do(a) ${data.player1Name}`);
     });
 
     const newGameBtn = document.querySelector("#restartBtn"); //BOTÃO DE REINICIAR O JOGO
@@ -87,11 +88,11 @@ const playMove = (box, data) => {
 const endConditions = (data) => {
     if (checkWinner(data)) { //verifica em outra função
         let winnerName = currentPlayerFunc(data);
-        adjustDom("displayTurn", winnerName + " has won the game");
+        adjustDom("displayTurn", winnerName + " Ganhou o jogo");
         data.gameOver = true;
         return true;
     } else if (data.round === 9) {
-        adjustDom("displayTurn", "It's a Tie!");
+        adjustDom("displayTurn", "O jogo empatou!");
         data.gameOver = true;
         return true;
     }
@@ -121,7 +122,7 @@ function adjustDom(className, textContent) {
 
 function changePlayer(data) {
     data.currentPlayer = (data.currentPlayer === "X") ? "O" : "X" //vse o player atual for o 1(x) muda para o player 2(o)
-    adjustDom("displayTurn", `${currentPlayerFunc(data)}'s turn`);
+    adjustDom("displayTurn", `vez do(a) ${currentPlayerFunc(data)}`);
 }
 
 function currentPlayerFunc(data) { //DEVE RECEBER O OBJETO DATA
@@ -133,4 +134,8 @@ function resetDom() {
         box.textContent = "";
         box.dataset.player = "";
     });
+}
+function capitalizeUsersName(data){
+    data.player1Name = data.player1Name[0].toUpperCase() + data.player1Name.substring(1);
+    data.player2Name = data.player2Name[0].toUpperCase() + data.player2Name.substring(1);
 }
