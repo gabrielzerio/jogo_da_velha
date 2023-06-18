@@ -87,7 +87,12 @@ body {
     /* TITULO DO JOGO (jogo da velha) game's title (tic tac toe)*/
     text-align: center;
     font-size: 4em;
-    color: #396afc;
+    color: #0575E6;
+    text-shadow: 
+               -1px -1px 0px #FFF, 
+               -1px 1px 0px #FFF,                    
+                1px -1px 0px #FFF,                  
+                1px 0px 0px #FFF;
     margin-bottom: 5px;
 }
 
