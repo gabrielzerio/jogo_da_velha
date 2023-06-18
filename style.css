@@ -80,7 +80,6 @@ body {
     outline: none;
     border-style: none;
     background-color: rgba(0, 0, 0, 0);
-    
 }
 
 #modal>h1 {
@@ -197,8 +196,8 @@ input[type="radio"] {
     #modal>h1 {
         /* TITULO DO JOGO (jogo da velha) game's title (tic tac toe)*/
         text-align: center;
-        font-size: 3.5em;
-        margin-bottom: 5px;
+        font-size: 3.3em;
+        padding-bottom: 10px;
     }
 
     .styleModal {
@@ -207,7 +206,7 @@ input[type="radio"] {
 
     .inputField {
         flex-direction: column;
-        font-size: 2em;
+        font-size: 1.82em;
         gap: 10px;
         padding-bottom: 1rem;
     }
