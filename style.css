@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Concert+One&family=Montserrat:wght@500&display=swap');
 
-
 body {
-    width: 100vw;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -13,34 +11,32 @@ body {
     /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #f4791f, #659999);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 
-.flex {
-    display: flex;
-    justify-content: center;
+.content {
+    width: 100%;
 }
 
-.title,
 .displayTurn,
 .buttons {
     display: flex;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     padding-bottom: 2rem;
     font-size: 2rem;
     color: #fff;
 }
 
-.title {
-    padding-top: 4rem;
-    font-size: 5rem;
-}
-
 .displayTurn {
+    height: 100px;
+    padding: 0px 10px 10px 10px;
     font-size: 2.5rem;
 }
 
 .buttons {
+    display: flex;
+    gap: 20px;
     cursor: pointer;
     height: 20px;
     padding-bottom: 3rem;
@@ -54,30 +50,16 @@ body {
     font-size: 2.3rem;
 }
 
-#restartBtn {
-    padding-left: 2rem;
-}
-
-.gameWrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
 .gameboard {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 2rem;
-    width: 25vw;
-    height: 25vw;
+    justify-content: center;
+    grid-template-columns: repeat(3, minmax(100px, 150px));
+    grid-template-rows: repeat(3, 150px);
+    gap: 1rem;
 }
 
 .box {
-    width: auto;
-    height: auto;
-    min-width: 50px;
-    min-height: 50px;
+    /* min-height: 150px;  */
     border-radius: 1rem;
     font-size: max(4vw, 3rem);
     font-family: 'Montserrat', sans-serif;
@@ -90,98 +72,45 @@ body {
     cursor: pointer;
 }
 
-/* .player1 {
-
-} */
-
-.player2 {
-    font-size: max(4vw, 3rem);
-
-    text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 25px #f09;
-}
-
 .box:hover {
     transform: scale(1.1);
 }
 
-@media only screen and (max-width: 900px) {
-    .gameWrapper {
-        width: 100vw;
-    }
-
-    .gameboard {
-        width: auto;
-    }
+/* DAQUI PRA BAIXO É O FORMULARIO (dialog) */
+#modal {
+    outline: none;
+    border-style: none;
+    background-color: rgba(0, 0, 0, 0);
+    
 }
 
-/* DAQUI PRA BAIXO É O FORMULARIO */
-.modal-wrapper {
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.8);
-    /* Black w/ opacity */
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    /* Stay in place */
-}
-
-.modal {
-    display: flex;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    overflow: auto;
-    /* Enable scroll if needed */
-    height: fit-content;
-    font-size: max(5vh, 20px);
-}
-
-/* Modal Content/Box */
-.modal-content,
-.front-content {
-    background-color: rgba(0, 0, 0, 0.2);
+#modal>h1 {
+    /* TITULO DO JOGO (jogo da velha) game's title (tic tac toe)*/
     text-align: center;
-    width: 100%;
-    /* Could be more or less, depending on screen size */
-    border: thin;
-    border-radius: 20px;
-    color: #fff;
+    font-size: 4em;
+    margin-bottom: 5px;
 }
 
-.front-content {
-    margin: 5vh auto;
-    border: none;
-    width: auto;
-    border-radius: 0px;
-    border: 0.2rem solid #fff;
-    border-radius: 2rem;
-    padding: 2rem 5rem 2rem 5rem;
-    box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #659999,
-        0 0 0.8rem #659999, 0 0 2.8rem #659999, inset 0 0 1.3rem #659999;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
+.styleModal {
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    outline: none;
+    border-style: none;
+    border: 1px solid black;
+    border-radius: 8px;
 }
 
-.front:hover,
-.front:focus {
-    color: black;
-    cursor: pointer;
+#modal::backdrop {
+    backdrop-filter: blur(5px);
 }
 
 .inputField {
     display: flex;
-    font-size: max(0.83em, 25px);
+    align-items: center;
+    font-size: max(1.83em, 25px);
     width: 100%;
     padding-bottom: 3rem;
-    align-items: center;
 }
 
 .formClass {
@@ -219,11 +148,15 @@ input[type="radio"] {
     margin-left: 2rem;
 }
 
-.startButton {
+.btnSubmit {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+}
+
+
+.startButton {
+    height: 4rem;
     width: 200px;
     outline: none;
     background-color: rgba(201, 201, 201, 0.678);
@@ -233,8 +166,59 @@ input[type="radio"] {
     color: rgb(18, 64, 26);
     font-size: 1.5rem;
     font-weight: 500;
+    transition: all 0.2s ease-in-out;
 }
 
 .startButton:hover {
+    font-size: 2rem;
     cursor: pointer;
+}
+
+@media (width < 800px) {
+    .gameboard {
+        padding: 0px 15px 0px 15px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows:repeat(3,150px) ;
+    }
+
+    .buttons {
+        cursor: auto;
+    }
+    #modal{
+        width: 100%;
+    }
+    #modal>h1 {
+        /* TITULO DO JOGO (jogo da velha) game's title (tic tac toe)*/
+        text-align: center;
+        font-size: 3.5em;
+        margin-bottom: 5px;
+    }
+
+    .styleModal {
+        padding:10px;
+    }
+
+    .inputField {
+        flex-direction: column;
+        font-size: 2em;
+        gap: 10px;
+        padding-bottom: 1rem;
+    }
+    input[type="radio"] {
+        margin: 0;        
+    }
+    .formClass {
+        margin: 0;
+        width: 80%;
+    }
+
+    .box {
+        cursor: auto;
+    }
+}
+
+@media (width<500px){
+    .gameboard {
+        grid-template-rows:repeat(3,100px) ;
+    }
 }

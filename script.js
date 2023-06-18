@@ -1,5 +1,9 @@
-//PAREI EM 1:06:31 falta comentar o checkWinning
-document.querySelector("#myForm").addEventListener('submit', getPlayersNames); //1
+//PAREI EM 1:06:31
+document.addEventListener("DOMContentLoaded", function (event) {
+    document.querySelector("#modal").showModal();
+});
+document.querySelector("#modal").addEventListener('cancel', (e) => e.preventDefault());
+document.querySelector("#myForm").addEventListener('submit', getPlayersNames); //tudo começa aqui
 
 const winningCondition = () => {
     let posicoesVitoria = [
@@ -16,14 +20,13 @@ const winningCondition = () => {
 }
 
 function getPlayersNames(e) {
-    //previnir o envio do formulario
     e.preventDefault();
+    document.querySelector("#modal").close();
     //aqui vou usar a API FormData pra pegar todos as infos dos inputs mais rapido.
     const form = document.querySelector("#myForm");
     const formData = new FormData(form); //criei o objeto do tipo FormData
     const data = Object.fromEntries(formData); //
     // console.log(data);
-    document.querySelector(".modal-wrapper").setAttribute("hidden", true);
     initilizeGame(data);
 }
 
@@ -37,7 +40,7 @@ const initilizeVariables = (data) => {
     data.choice = +data.choice; //força a variável a ser um tipo numero tornando ela positiva
     data.board = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //numero das boxes
     data.player1 = 'X'; //escolha do player 1 é X
-    data.player2 = 'O'; 
+    data.player2 = 'O';
     data.round = 0; //precisa de uma variavel que vai controlar os rounds pois pode dar empate(maximo de round são 8)
     data.currentPlayer = 'X';
     data.gameOver = false; //game over so será verdadeiro quando um dos players fazer uma sequência
@@ -49,13 +52,14 @@ function gameBoardEventListeners(data) {
             playMove(e.target, data); // chama a função das jogadas.
         });
     });
-    const resetGameBtn = document.querySelector("#resetBtn");
+    const resetGameBtn = document.querySelector("#resetBtn"); //BOTÃO DE RESETAR AS JOGADAS
     resetGameBtn.addEventListener("click", () => {
         initilizeVariables(data);
         resetDom();
         adjustDom("displayTurn", `${data.player1Name}'s turn`);
     });
-    const newGameBtn = document.querySelector("#restartBtn");
+
+    const newGameBtn = document.querySelector("#restartBtn"); //BOTÃO DE REINICIAR O JOGO
     newGameBtn.addEventListener("click", () => {
         window.location.reload(false);
     });
@@ -71,8 +75,7 @@ const playMove = (box, data) => {
     }                                                               //se sim, ele retorna para não sobrescrever.    
     data.board[box.id] = data.currentPlayer; //vai mudar o array com o token (X ou O) do jogador atual;
     box.textContent = data.currentPlayer;    //vai preencher a div com x ou y (interface somente);
-    box.dataset.player = data.currentPlayer === "X" ? "player1" : "player2"; //a div tem um DataAttribute que vai receber de qual jogador é o token
-    data.round++;               //incrementa o round                         //que está preenchido nela)           
+    data.round++;               //incrementa o round                                  
     // console.log(box,data);   
     if (endConditions(data)) { //função que verifica se de acord com as informações o jogo terminaria
         return; //se for verdadeira retorna
@@ -99,7 +102,7 @@ const checkWinner = (data) => {
     let result = false;
     const getWC = winningCondition();                  //resgata a variável
     let winningConditions = getWC.getWinConditions();  //das sequencias de vitoria
-    
+
     winningConditions.forEach(condition => { // vai iterar todas as linha da variavel de condição de vitoria
         // console.log(data.board);
         if (data.board[condition[0]] === data.board[condition[1]] && data.board[condition[1]] === data.board[condition[2]]) {
