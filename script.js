@@ -1,8 +1,8 @@
-//PAREI EM 1:06:31
 document.addEventListener("DOMContentLoaded", function (event) {
     document.querySelector("#modal").showModal();
 });
 document.querySelector("#modal").addEventListener('cancel', (e) => e.preventDefault());
+
 document.querySelector("#myForm").addEventListener('submit', getPlayersNames); //tudo começa aqui
 
 const winningCondition = () => {
