@@ -15,6 +15,7 @@
 
   <div class="content">
     <h3 class="displayTurn">Player 1's turn</h3>
+    <p class="timeRemaining"></p>
     <div class="buttons">
       <div id="resetBtn" class="btn">Reset Game</div>
       <div id="restartBtn" class="btn">New Game</div>
@@ -44,7 +45,7 @@
             </div>
             <div class="inputField">
               <label class="input-label"> (O) Nome do jogador 2:</label>
-              <input type="text" name="player2Name" class="formClass" id="form2" required />
+              <input type="text" name="player2Name" class="formClass" id="form2" />
             </div>
             <div class="inputField">
               <label for="1v1" class="Title container">Humano vs Humano:</label>
@@ -52,7 +53,7 @@
             </div>
             <div class="inputField">
               <label for="ai" class="Title">Human vs Easy AI:</label>
-              <input type="radio" id="ai" name="choice" value="1" required disabled />
+              <input type="radio" id="ai" name="choice" value="1" required />
             </div>
             <div class="inputField">
               <label for="ai" class="Title">Human vs Hard AI:</label>

@@ -58,6 +58,7 @@ function gameBoardEventListeners(data) {
         initilizeVariables(data);
         resetDom();
         adjustDom("displayTurn", `vez do(a) ${data.player1Name}`);
+        clearInterval(timer);
     });
 
     const newGameBtn = document.querySelector("#restartBtn"); //BOTÃO DE REINICIAR O JOGO
@@ -90,10 +91,14 @@ const endConditions = (data) => {
         let winnerName = currentPlayerFunc(data);
         adjustDom("displayTurn", winnerName + " Ganhou o jogo");
         data.gameOver = true;
+        gameStatusAlert(winnerName);
+        autoRestart();
         return true;
     } else if (data.round === 9) {
         adjustDom("displayTurn", "O jogo empatou!");
         data.gameOver = true;
+        gameStatusAlert();
+        autoRestart();
         return true;
     }
     return false;
@@ -118,6 +123,7 @@ const checkWinner = (data) => {
 function adjustDom(className, textContent) {
     const elem = document.querySelector(`.${className}`);
     elem.textContent = textContent;
+
 }
 
 function changePlayer(data) {
@@ -134,8 +140,32 @@ function resetDom() {
         box.textContent = "";
         box.dataset.player = "";
     });
+    adjustDom("timeRemaining","");
 }
 function capitalizeUsersName(data){
     data.player1Name = data.player1Name[0].toUpperCase() + data.player1Name.substring(1);
     data.player2Name = data.player2Name[0].toUpperCase() + data.player2Name.substring(1);
+}
+
+function gameStatusAlert(name){
+    setTimeout(function() {
+        if(name !== undefined){
+            alert(`${name} ganhou o jogo`);
+            return
+        }
+        alert("o jogo empatou");
+      }, 100)
+}
+
+function autoRestart(){
+    let i=7;
+    timer = setInterval(function() {
+        adjustDom("timeRemaining", `o jogo vai reiniciar automaticamente em ${i} segundos`);
+        if(i==0){
+            const resetGameBtn = document.querySelector("#resetBtn");
+            resetGameBtn.click();
+            clearInterval(timer);
+        }
+        i--;
+      }, 1000)       
 }

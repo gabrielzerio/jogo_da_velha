@@ -12,6 +12,12 @@ body {
 .content {
     width: 100%;
 }
+.timeRemaining{
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.15rem;
+}
 
 .displayTurn,
 .buttons {
